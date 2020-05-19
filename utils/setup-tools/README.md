@@ -1,4 +1,49 @@
-# 1 Install Docker
+# 1. Install Java
+
+###Windows
+
+Install [SDKMAN](https://sdkman.io/install) using cygwin, git bash or else.
+
+Once it is installed, you can list java version from terminal (cygwin, git bash or else)
+```bash
+sdk list java
+```
+
+Install java 11 version using identifier
+```bash
+sdk install java 11.0.7.hs-adpt
+```
+
+You can switch java versions
+```bash
+sdk use java 11.0.7.hs-adpt
+```
+###OSX & Linux
+
+Install [SDKMAN](https://sdkman.io/install)
+```bash
+curl -s "https://get.sdkman.io" | bash
+```
+```bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+```
+
+List java version
+```bash
+sdk list java
+```
+
+Install java 11 version using identifier
+```bash
+sdk install java 11.0.7.hs-adpt
+```
+
+You can switch java versions
+```bash
+sdk use java 11.0.7.hs-adpt
+```
+
+# 2. Install Docker
 
 Docker is an open-source project that automates the deployment of software applications inside containers by providing an additional layer of abstraction and automation of OS-level virtualization on Linux.
 
@@ -57,7 +102,7 @@ docker run hello-world
 docker -v
 ```
 
-# 2 Install Kubernetes command-line tool (Kubectl)
+# 3. Install Kubernetes command-line tool (Kubectl)
 The Kubernetes command-line tool, `kubectl`, allows you to run commands against Kubernetes clusters. You can use kubectl to deploy applications, inspect and manage cluster resources, and view logs. Please refer to [Reference Documentation](https://kubernetes.io/docs/tasks/tools/install-kubectl/) for more detailed instructions.
 
 ###Windows
@@ -82,9 +127,12 @@ sudo mv ./kubectl /usr/local/bin/kubectl
 kubectl version --client
 ```
 
-# 3. Install Kind
+# 4. Install Kind
 
-kind (`kind`)cis a tool for running local Kubernetes clusters using Docker container “nodes”. kind was primarily designed for testing Kubernetes itself, but may be used for local development or CI. Please refer to [Reference Documentation](https://kind.sigs.k8s.io/docs/user/quick-start/) for more detailed instructions.
+kind is a tool for running local Kubernetes clusters using Docker container “nodes”. It is used for development or ci. 
+Kind use Docker container to create k8s cluster. You could install Minikube as an alternative. Minikube is more friendly but also heavier because spawning VM.   
+
+Please refer to [Reference Documentation](https://kind.sigs.k8s.io/docs/user/quick-start/) for more detailed instructions.
 
 ###Windows
 Dowmload the [executable](https://kind.sigs.k8s.io/dl/v0.7.0/kind-windows-amd64) and place it on the PATH. You can also use **[Chocolatey](https://chocolatey.org/packages/kind)** very clever package manager for windows.

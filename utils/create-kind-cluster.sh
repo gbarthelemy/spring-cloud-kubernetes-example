@@ -16,6 +16,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	
 # See the License for the specific language governing permissions and	
 # limitations under the License.
+#
+# This script build a kind cluster with specific configuration
+# Create a container responsible for docker registry at port 5000
+# Create a Contour ingress controller :
+# * A new namespace projectcontour
+# * Two instances of Contour in the namespace
+# * A Kubernetes Daemonset running Envoy on each node in the cluster listening on host ports 80/443
+# * A Service of type: LoadBalancer that points to the Contour’s Envoy instances
+#
+# Documentation :
+# cf https://kind.sigs.k8s.io/docs/user/local-registry/
+# cf https://kind.sigs.k8s.io/docs/user/ingress/
 
 set -o errexit
 
@@ -73,8 +85,30 @@ containerdConfigPatches:
 - |-
   [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:${reg_port}"]
     endpoint = ["http://${reg_ip}:${reg_port}"]
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  - containerPort: 80
+    hostPort: 80
+    protocol: TCP
+  - containerPort: 443
+    hostPort: 443
+    protocol: TCP
 EOF
 
 for node in $(kind get nodes --name "${KIND_CLUSTER_NAME}"); do
   kubectl annotate node "${node}" tilt.dev/registry=localhost:${reg_port};
 done
+
+# Deploy Contour component
+kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
+
+# Apply kind specific patches to forward the hostPorts to the ingress controller, set taint tolerations and schedule it to the custom labelled node
+kubectl patch daemonsets -n projectcontour envoy -p '{"spec":{"template":{"spec":{"nodeSelector":{"ingress-ready":"true"},"tolerations":[{"key":"node-role.kubernetes.io/master","operator":"Equal","effect":"NoSchedule"}]}}}}'
+

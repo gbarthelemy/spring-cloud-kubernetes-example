@@ -24,7 +24,9 @@ You will find the [instructions here](utils/setup-tools/README.md)
 
 This script does the following tasks :
 * run registry:2 container (local image repository used by our local k8s cluster)
-* create our local k8s cluster named spring-kube 
+* create our local k8s cluster named spring-kube using config for handling docker registry and portMapping
+* create Contour ingress controller
+* create kind patch to forward the hostPorts to the ingress controller
 
 #### 2.2 create role
 ```bash

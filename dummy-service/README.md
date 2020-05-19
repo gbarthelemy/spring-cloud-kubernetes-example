@@ -2,7 +2,7 @@
 
 This module is a basic web-service and is based on Springboot. It is build as a jar and then embedded in openjdk docker image. 
 
-## 1 Prerequisites
+## 1. Prerequisites
 
 * Docker daemon
 * kind installed (Minikube could do the job also)
@@ -12,16 +12,11 @@ This module is a basic web-service and is based on Springboot. It is build as a 
 * local kubernetes cluster running
 * default serviceAccount have access to configmaps, secrets, pods, services
 
-## 2 Build the application
+You will find the [instructions here](../README.md)
 
-### 2.1 Build the image from [script](./../../spring-cloud-kubernetes-example/utils/build.sh)
+## 2. Build the application
 
-```bash
-cd ../spring-cloud-kubernetes-example
-./utils/build.sh
-```
-
-### 2.1' Build the image manually
+### 2.1. Build the image manually
 
 Build the app jar   
 ```bash
@@ -32,7 +27,7 @@ Build the docker image named dummy-service
 docker build -t dummy-service .
 ```
 
-### 2.2 Push the image to the kubernetes image repository
+### 2.2. Push the image to the kubernetes image repository
 
 Tag the image to prepare upload   
 ```bash
@@ -43,9 +38,9 @@ Push the image to the kubernetes repository
 docker push localhost:5000/dummy-service:latest
 ```
 
-## 4 Run 
+## 3. Run 
 
-### 4.1 Run the app
+### 3.1. Run the app
 
 Create NodePort service and Deployment dummy-service
 ```bash
@@ -53,7 +48,7 @@ kubectl delete -f 1-dummy-service-deployment.yaml
 kubectl create -f 1-dummy-service-deployment.yaml 
 ```
 
-### 4.2 Check state of the app
+### 3.2. Check state of the app
 
 Check k8s service (NodePort) status
 ```bash
