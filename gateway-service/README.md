@@ -1,6 +1,22 @@
 # Spring cloud kubernetes gateway service
 
-This project is a gateway web-service and is based on Spring Cloud Kubernetes project. It is build as a jar and then embedded in openjdk docker image.
+This module is a basic web-service based on Springboot. The runnable is built as a jar and then embedded in openjdk docker image.
+
+This project has the following dependencies :
+ * spring-boot-starter-web
+ * spring-boot-starter-actuator
+ * spring-boot-configuration-processor
+ * spring-cloud-kubernetes-core
+ * spring-cloud-kubernetes-config
+ * spring-cloud-kubernetes-discovery
+ 
+It is build as a jar and then embedded in openjdk docker image.
+
+* Start time : 14.584 seconds
+* Pod memory usage : 253Mi
+* Pod CPU(cores) : 1741m
+* Image size : 267MB
+* App build time : ~5 seconds
 
 ## 1. Prerequisites
 
@@ -22,20 +38,20 @@ Build the app jar
 ```bash
 mvn clean install
 ```
-Build the docker image named gateway-service   
+Build the docker image named spring-gateway-service   
 ```bash
-docker build -t gateway-service .
+docker build -t spring-gateway-service .
 ```
 
 ### 2.2. Push the image to the kubernetes image repository
 
 Tag the image to prepare upload   
 ```bash
-docker tag gateway-service:latest localhost:5000/gateway-service:latest
+docker tag spring-gateway-service:latest localhost:5000/spring-gateway-service:latest
 ```
 Push the image to the kubernetes repository
 ```bash
-docker push localhost:5000/gateway-service:latest
+docker push localhost:5000/spring-gateway-service:latest
 ```
 
 ## 3. Create configmap and secret
@@ -43,25 +59,25 @@ docker push localhost:5000/gateway-service:latest
 #### 3.1. create configmap
 
 ```bash
-kubectl delete -f 1-gateway-service-configmap.yaml
-kubectl create -f 1-gateway-service-configmap.yaml
+kubectl delete -f 1-spring-gateway-service-configmap.yaml
+kubectl create -f 1-spring-gateway-service-configmap.yaml
 ```
 
 #### 3.2. create secret
 
 ```bash
-kubectl delete -f 2-gateway-service-secret.yaml
-kubectl create -f 2-gateway-service-secret.yaml
+kubectl delete -f 2-spring-gateway-service-secret.yaml
+kubectl create -f 2-spring-gateway-service-secret.yaml
 ```
 
 ## 4. Run 
 
 ### 4.1. Run the app
 
-Create NodePort service and Deployment gateway-service
+Create NodePort service and Deployment spring-gateway-service
 ```bash
-kubectl delete -f 3-gateway-service-deployment.yaml 
-kubectl create -f 3-gateway-service-deployment.yaml 
+kubectl delete -f 3-spring-gateway-service-deployment.yaml 
+kubectl create -f 3-spring-gateway-service-deployment.yaml 
 ```
 
 ### 4.2. Check state of the app
@@ -88,7 +104,7 @@ kubectl logs <pod_name>
 
 Create port forward
 ```bash
-kubectl port-forward svc/gateway-service 8080:8080
+kubectl port-forward svc/spring-gateway-service 8080:8080
 ```
 Curl the actuator health endpoint to check service 
 ```bash
@@ -101,7 +117,7 @@ curl localhost:8080/
 
 ## 6. Create Ingress controller
 
-In order to map incoming http traffic to gateway-service, run the following :
+In order to map incoming http traffic to spring-gateway-service, run the following :
 ```bash
 kubectl delete -f 4-api-ingress.yml
 kubectl create -f 4-api-ingress.yml

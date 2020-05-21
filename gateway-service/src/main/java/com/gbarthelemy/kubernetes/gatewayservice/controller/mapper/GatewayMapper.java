@@ -1,6 +1,6 @@
-package com.gbarthelemy.kubernetes.gatewayservice.resource.mapper;
+package com.gbarthelemy.kubernetes.gatewayservice.controller.mapper;
 
-import com.gbarthelemy.kubernetes.gatewayservice.resource.model.InstanceDto;
+import com.gbarthelemy.kubernetes.gatewayservice.controller.model.InstanceDto;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.cloud.client.ServiceInstance;

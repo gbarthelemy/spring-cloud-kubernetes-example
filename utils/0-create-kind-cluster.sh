@@ -32,10 +32,10 @@
 set -o errexit
 
 # desired cluster name; default is "kind"
-KIND_CLUSTER_NAME="$1"
+KIND_CLUSTER_NAME='spring-kube'
 
 kind_version=$(kind version)
-reg_name='kind-registry'
+reg_name='spring-kind-registry'
 reg_port='5000'
 reg_ip_selector='{{.NetworkSettings.Networks.kind.IPAddress}}'
 reg_network='kind'
@@ -66,7 +66,8 @@ if [ "${running}" != 'true' ]; then
   fi
   
   docker run \
-    -d --restart=always -p "${reg_port}:5000" --name "${reg_name}" --net "${reg_network}" \
+    -e "REGISTRY_HTTP_ADDR=0.0.0.0:${reg_port}" \
+    -d --restart=always -p "${reg_port}:${reg_port}" --name "${reg_name}" --net "${reg_network}" \
     registry:2
 fi
 
@@ -106,8 +107,15 @@ for node in $(kind get nodes --name "${KIND_CLUSTER_NAME}"); do
   kubectl annotate node "${node}" tilt.dev/registry=localhost:${reg_port};
 done
 
-# Deploy Contour component
+# Deploy Contour ingress controller
 kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
 
 # Apply kind specific patches to forward the hostPorts to the ingress controller, set taint tolerations and schedule it to the custom labelled node
 kubectl patch daemonsets -n projectcontour envoy -p '{"spec":{"template":{"spec":{"nodeSelector":{"ingress-ready":"true"},"tolerations":[{"key":"node-role.kubernetes.io/master","operator":"Equal","effect":"NoSchedule"}]}}}}'
+
+kubectl create -f 1-namespace-reader-role.yaml
+kubectl create -f 2-metric-server.yml
+
+# For more information about metric-server, check :
+# * https://kubernetes.io/docs/tasks/debug-application-cluster/resource-metrics-pipeline/
+# * https://github.com/kubernetes-sigs/metrics-server

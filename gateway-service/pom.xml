@@ -57,7 +57,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.gbarthelemy.kubernetes.gatewayservice.Application</mainClass>
+                    <mainClass>com.gbarthelemy.kubernetes.gatewayservice.GatewayServiceApplication</mainClass>
                     <layout>JAR</layout>
                 </configuration>
                 <executions>

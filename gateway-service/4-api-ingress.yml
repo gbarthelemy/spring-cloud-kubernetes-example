@@ -5,14 +5,10 @@ metadata:
   annotations:
     ingress.kubernetes.io/rewrite-target: /
 spec:
-#  # default backend
-#  backend:
-#    serviceName: gateway-service
-#    servicePort: 8080
   rules:
     - http:
         paths:
-          - path: /*
+          - path: /
             backend:
-              serviceName: gateway-service
+              serviceName: spring-gateway-service
               servicePort: 8080

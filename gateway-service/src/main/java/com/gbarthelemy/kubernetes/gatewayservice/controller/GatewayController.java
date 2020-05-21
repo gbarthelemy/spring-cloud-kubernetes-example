@@ -1,9 +1,9 @@
-package com.gbarthelemy.kubernetes.gatewayservice.resource;
+package com.gbarthelemy.kubernetes.gatewayservice.controller;
 
 import com.gbarthelemy.kubernetes.gatewayservice.configuration.GatewayProperties;
 import com.gbarthelemy.kubernetes.gatewayservice.configuration.GatewaySecretProperties;
-import com.gbarthelemy.kubernetes.gatewayservice.resource.mapper.GatewayMapper;
-import com.gbarthelemy.kubernetes.gatewayservice.resource.model.ServiceDto;
+import com.gbarthelemy.kubernetes.gatewayservice.controller.mapper.GatewayMapper;
+import com.gbarthelemy.kubernetes.gatewayservice.controller.model.ServiceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.ResponseEntity;
