@@ -26,5 +26,5 @@ public class InstanceDto {
     String instanceId;
 
     @JsonProperty("metadata")
-    Map<String,String> metadata;
+    Map<String, String> metadata;
 }
