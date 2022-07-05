@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11-jre-hotspot
+FROM openjdk:17-jdk-slim-buster
 VOLUME /tmp
 COPY target/spring-cloud-k8s-dummy-service-*.jar app.jar
 ENV JAVA_OPTS=""

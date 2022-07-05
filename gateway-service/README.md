@@ -15,7 +15,7 @@ It is build as a jar and then embedded in openjdk docker image.
 * Start time : 14.584 seconds
 * Pod memory usage : 253Mi
 * Pod CPU(cores) : 1741m
-* Image size : 267MB
+* Image size : 441MB
 * App build time : ~5 seconds
 
 ## 1. Prerequisites
@@ -24,7 +24,6 @@ It is build as a jar and then embedded in openjdk docker image.
 * kind installed (Minikube could do the job also)
 * kubectl cli installed
 * maven cli installed
-* Java 11 installed
 * local kubernetes cluster running
 * default serviceAccount have access to configmaps, secrets, pods, services
 
@@ -59,14 +58,14 @@ docker push localhost:5000/spring-gateway-service:latest
 #### 3.1. create configmap
 
 ```bash
-kubectl delete -f 1-spring-gateway-service-configmap.yaml
+kubectl delete -f 1-spring-gateway-service-configmap.yaml;
 kubectl create -f 1-spring-gateway-service-configmap.yaml
 ```
 
 #### 3.2. create secret
 
 ```bash
-kubectl delete -f 2-spring-gateway-service-secret.yaml
+kubectl delete -f 2-spring-gateway-service-secret.yaml;
 kubectl create -f 2-spring-gateway-service-secret.yaml
 ```
 
@@ -76,7 +75,7 @@ kubectl create -f 2-spring-gateway-service-secret.yaml
 
 Create NodePort service and Deployment spring-gateway-service
 ```bash
-kubectl delete -f 3-spring-gateway-service-deployment.yaml 
+kubectl delete -f 3-spring-gateway-service-deployment.yaml;
 kubectl create -f 3-spring-gateway-service-deployment.yaml 
 ```
 

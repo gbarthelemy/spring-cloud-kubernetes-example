@@ -8,11 +8,11 @@ This project has the following dependencies :
 
 It is build as a jar and then embedded in openjdk docker image.
 
-* Start time : 9.063 seconds
-* Pod memory usage : 147Mi
-* Pod CPU(cores) : 6m
-* Image size : 245MB
-* App build time : ~4 seconds
+* Start time : 3.933 seconds
+* Pod memory usage : 131Mi
+* Pod CPU(cores) : 4m
+* Image size : 419MB
+* App build time : ~3 seconds
 
 ## 1. Prerequisites
 
@@ -20,7 +20,6 @@ It is build as a jar and then embedded in openjdk docker image.
 * kind installed (Minikube could do the job also)
 * kubectl cli installed
 * maven cli installed
-* Java 11 installed
 * local kubernetes cluster running
 * default serviceAccount have access to configmaps, secrets, pods, services
 
@@ -57,7 +56,7 @@ docker push localhost:5000/spring-dummy-service:latest
 
 Create NodePort service and Deployment spring-dummy-service
 ```bash
-kubectl delete -f 1-spring-dummy-service-deployment.yaml 
+kubectl delete -f 1-spring-dummy-service-deployment.yaml;
 kubectl create -f 1-spring-dummy-service-deployment.yaml 
 ```
 

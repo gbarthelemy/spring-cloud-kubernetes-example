@@ -1,6 +1,6 @@
 #FROM openjdk:8-jdk-alpine
 # Unofficial immage
-FROM adoptopenjdk:11-jre-hotspot
+FROM openjdk:17-jdk-slim-buster
 VOLUME /tmp
 COPY target/spring-cloud-k8s-gateway-service-*.jar app.jar
 ENV JAVA_OPTS=""
